@@ -2,11 +2,16 @@ from turtle import Turtle
 
 STARTING_POSITIONS = [(0, 0), (-20, 0), (-40, 0)]
 MOVE_DISTANCE = 20
+UP = 90
+DOWN = 270
+LEFT = 180
+RIGHT = 0
 
 class Snake:
     def __init__(self):
         self.segments = []
         self.create_snake()
+        self.head = self.segments[0]
 
     def create_snake(self):
         for pos in STARTING_POSITIONS:
@@ -21,4 +26,36 @@ class Snake:
             new_x = self.segments[i - 1].xcor()
             new_y = self.segments[i - 1].ycor()
             self.segments[i].goto(new_x, new_y)
-        self.segments[0].forward(MOVE_DISTANCE)
+        self.head.forward(MOVE_DISTANCE)
+
+    def up(self):
+        #self.head.setheading(90) one line will work
+        if self.head.heading() == 0:
+            self.head.setheading(UP)
+        elif self.head.heading() == 180:
+            for i in range(len(self.segments)):
+                self.segments[i].right(UP)
+
+    def down(self):
+        if self.head.heading() == 0:
+            for i in range(len(self.segments)):
+                self.segments[i].right(90)
+        elif self.head.heading() == 180:
+            for i in range(len(self.segments)):
+                self.segments[i].left(90)
+
+    def left(self):
+        if self.head.heading() == 90:
+            for i in range(len(self.segments)):
+                self.segments[i].left(90)
+        elif self.head.heading() == 270:
+            for i in range(len(self.segments)):
+                self.segments[i].right(90)
+
+    def right(self):
+        if self.head.heading() == 90:
+            for i in range(len(self.segments)):
+                self.segments[i].right(90)
+        elif self.head.heading() == 270:
+            for i in range(len(self.segments)):
+                self.segments[i].left(90)
